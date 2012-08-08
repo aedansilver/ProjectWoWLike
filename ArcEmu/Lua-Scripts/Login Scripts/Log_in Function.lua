@@ -1,3 +1,5 @@
+--CREDITS TO AK47SIGH
+
 local logon_db = "accounts" 						-- name of the logon DB
 
 local online_table = "online" 					-- name of the online column

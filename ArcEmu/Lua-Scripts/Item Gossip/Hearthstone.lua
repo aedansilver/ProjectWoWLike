@@ -1,3 +1,4 @@
+-- CREDITS TO AK47SIGH FOR CODING & ANSAMBLING
 
 local itemid = 6948
 local reset_time = 30 -- in seconds 60 = 1 minute

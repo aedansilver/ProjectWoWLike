@@ -1,3 +1,5 @@
+--CREDITS TO AK47SIGH FOR CODING & ANSAMBLING
+
 local npcid = 55555
 
 function Class_OnGossip(pUnit,event,player)

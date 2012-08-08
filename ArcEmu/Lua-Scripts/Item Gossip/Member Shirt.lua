@@ -1,3 +1,5 @@
+--CREDITS TO AK47SIGH FOR CODING & ANSAMBLING
+
 local itemid = 100009
 
 --- locals

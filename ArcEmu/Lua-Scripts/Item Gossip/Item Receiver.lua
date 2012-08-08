@@ -1,3 +1,6 @@
+-- CREDITS TO:
+-- ROCHET2 FOR CODING
+-- AK47SIGH FOR RE-ANSAMBLING
 
 local itemid = 99999
 local donate_table = "donate_show"

@@ -1,3 +1,5 @@
+--CREDITS TO AK47SIGH FOR CODING & ANSAMBLING
+
 local npcid = 130015 -- "880044" this is your Entry ID, you can change it at any time!
 local extcIDlv1 = 3100 -- REQ: (97014) Level 1 Item Show
 local extcIDlv2 = 3101 -- REQ: (97008) Level 2 Item Show

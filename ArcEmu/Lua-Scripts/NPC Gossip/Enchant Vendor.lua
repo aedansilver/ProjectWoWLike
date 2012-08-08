@@ -1,3 +1,5 @@
+--CREDITS TO ROCHET2 FOR RE-CODING & AK47SIGH FOR RE-ANSAMBLING
+
 local npcid = 90002
 
 local mgcost = 600

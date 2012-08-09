@@ -14,7 +14,7 @@ enum eEnums
 };
 
 #define MSG_ON_TELEPORT		 "|cff288C00Changing location.. please wait|r"
-
+#define GOSSIP_INT_AUCTION	 "Int'l Auction Function"
 #define GOSSIP_ITEM_RETURN   "|cff565656Return|r"
 #define GOSSIP_ITEM_MAINMENU "|cff565656[Main Menu]|r"
 #define GOSSIP_ITEM_1        "Global GPS Teleport"
@@ -35,9 +35,42 @@ class gossip_teleporter : public CreatureScript
 
         bool OnGossipHello(Player* player, Creature* creature)
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_ITEM_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
-
+				player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+				player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_ITEM_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
+			switch (player->getClass())
+			{
+				case CLASS_WARRIOR:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Warrior Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_ROGUE:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Rogue Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_PALADIN:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Paladin Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_MAGE:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Mage Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_WARLOCK:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Warlock Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_SHAMAN:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Shaman Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_HUNTER:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Hunter Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_DRUID:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Druid Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_PRIEST:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Priest Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+				case CLASS_DEATH_KNIGHT:
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff832E21Death Knight Train Skill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7000);
+					break;
+			}
+			player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_INT_AUCTION, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7001);
             player->PlayerTalkClass->SendGossipMenu(5695, creature->GetGUID());
 
             return true;
@@ -111,7 +144,6 @@ class gossip_teleporter : public CreatureScript
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [Undead Birthplace]", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+26);
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [Tauren Birthplace]", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+27);
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [Troll&Orc Birthplace]", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+28);
-					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cffFFFFFF Int'l Function|r", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+29);
 					player->PlayerTalkClass->SendGossipMenu(5695, creature->GetGUID());
 					break;
 				}
@@ -242,10 +274,14 @@ class gossip_teleporter : public CreatureScript
 					player->TeleportTo(1, -618.51f, -4251.66f, 38.71f, 0.00000f);
 					break;
 				}
-			case GOSSIP_ACTION_INFO_DEF + 29: // Int'l Trainer Function
+			case GOSSIP_ACTION_INFO_DEF + 7000: // Int'l Trainer Function
 				{
-					player->GetSession()->SendNotification("|cff00ffffListing trainer spells for your class.|r");
 					player->GetSession()->SendTrainerList(guid);
+					break;
+				}
+			case GOSSIP_ACTION_INFO_DEF + 7001: // Int'l Auction Function
+				{
+					player->GetSession()->SendAuctionHello(guid, creature);
 					break;
 				}
 				player->CLOSE_GOSSIP_MENU();

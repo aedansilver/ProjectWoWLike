@@ -27,12 +27,12 @@ static bool HandleGobjDeleteCustom(ChatHandler* handler, char const* args)
             handler->SetSentErrorMessage(true);
             return false;
         }
-
-		handler->PSendSysMessage("[%s] Deleted Gameobject (Entry:%d, GUID:%d).", MSG_GM_ICON, handler->GetNearbyGameObject()->GetEntry(), handler->GetNearbyGameObject()->GetGUID());
-		WorldDatabase.PQuery("DELETE FROM `gameobject` WHERE `guid`=%d", handler->GetNearbyGameObject()->GetGUID());
-		handler->GetNearbyGameObject()->SetRespawnTime(0);
-		handler->GetNearbyGameObject()->Delete();
-		handler->GetNearbyGameObject()->DeleteFromDB(); // strange it still appear back ingame after restart
+	 Object* obj = handler->GetNearbyGameObject(;
+		handler->PSendSysMessage("[%s] Deleted Gameobject (Entry:%d, GUID:%d).", MSG_GM_ICON, obj->GetEntry(), obj->GetGUID());
+		WorldDatabase.PQuery("DELETE FROM `gameobject` WHERE `guid`=%d", obj->GetGUID());
+		obj->SetRespawnTime(0);
+		obj->Delete();
+		obj->DeleteFromDB(); // strange it still appear back ingame after restart
 
         return true;
     }

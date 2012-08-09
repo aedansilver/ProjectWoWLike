@@ -314,21 +314,66 @@ class gossip_teleporter : public CreatureScript
 				}
 				case GOSSIP_ACTION_INFO_DEF + 7004: // All skills to max
 				{
+					if(player->HasSkill(43))
+					{
 					player->SetSkill(43, player->GetSkillStep(43), player->GetMaxSkillValue(43), player->GetMaxSkillValue(43));
+					}
+					if(player->HasSkill(44))
+					{
 					player->SetSkill(44, player->GetSkillStep(44), player->GetMaxSkillValue(44), player->GetMaxSkillValue(44));
+					}
+					if(player->HasSkill(45))
+					{
 					player->SetSkill(45, player->GetSkillStep(45), player->GetMaxSkillValue(45), player->GetMaxSkillValue(45));
+					}
+					if(player->HasSkill(46))
+					{
 					player->SetSkill(46, player->GetSkillStep(46), player->GetMaxSkillValue(46), player->GetMaxSkillValue(46));
+					}
+					if(player->HasSkill(54))
+					{
 					player->SetSkill(54, player->GetSkillStep(54), player->GetMaxSkillValue(54), player->GetMaxSkillValue(54));
+					}
+					if(player->HasSkill(55))
+					{
 					player->SetSkill(55, player->GetSkillStep(55), player->GetMaxSkillValue(55), player->GetMaxSkillValue(55));
+					}
+					if(player->HasSkill(95))
+					{
 					player->SetSkill(95, player->GetSkillStep(95), player->GetMaxSkillValue(95), player->GetMaxSkillValue(95));
+					}
+					if(player->HasSkill(136))
+					{
 					player->SetSkill(136, player->GetSkillStep(136), player->GetMaxSkillValue(136), player->GetMaxSkillValue(136));
+					}
+					if(player->HasSkill(160))
+					{
 					player->SetSkill(160, player->GetSkillStep(160), player->GetMaxSkillValue(160), player->GetMaxSkillValue(160));
+					}
+					if(player->HasSkill(162))
+					{
 					player->SetSkill(162, player->GetSkillStep(162), player->GetMaxSkillValue(162), player->GetMaxSkillValue(162));
+					}
+					if(player->HasSkill(173))
+					{
 					player->SetSkill(173, player->GetSkillStep(173), player->GetMaxSkillValue(173), player->GetMaxSkillValue(173));
+					}
+					if(player->HasSkill(176))
+					{
 					player->SetSkill(176, player->GetSkillStep(176), player->GetMaxSkillValue(176), player->GetMaxSkillValue(176));
+					}
+					if(player->HasSkill(172))
+					{
 					player->SetSkill(172, player->GetSkillStep(43), player->GetMaxSkillValue(172), player->GetMaxSkillValue(172));
+					}
+					if(player->HasSkill(226))
+					{
 					player->SetSkill(226, player->GetSkillStep(226), player->GetMaxSkillValue(226), player->GetMaxSkillValue(226));
+					}
+					if(player->HasSkill(229))
+					{
 					player->SetSkill(229, player->GetSkillStep(229), player->GetMaxSkillValue(229), player->GetMaxSkillValue(229));
+					}
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "All Skill Max!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 					player->PlayerTalkClass->SendGossipMenu(5695, creature->GetGUID());
 					break;

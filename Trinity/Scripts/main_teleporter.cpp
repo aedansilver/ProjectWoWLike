@@ -17,7 +17,7 @@ enum eEnums
 
 #define GOSSIP_ITEM_RETURN   "|cff565656Return|r"
 #define GOSSIP_ITEM_MAINMENU "|cff565656[Main Menu]|r"
-#define GOSSIP_ITEM_1        "[Global GPS Teleport]"
+#define GOSSIP_ITEM_1        "Global GPS Teleport"
 #define GOSSIP_WORLD_CITY    "|cff288C00 [World Main City]|r"
 #define GOSSIP_WORLD_BIRTH   " [World Birthplace]"
 #define GOSSIP_ITEM_4        "Exit"
@@ -38,20 +38,14 @@ class gossip_teleporter : public CreatureScript
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
             player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_ITEM_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
 
-            player->PlayerTalkClass->SendGossipMenu(907, creature->GetGUID());
+            player->PlayerTalkClass->SendGossipMenu(5695, creature->GetGUID());
 
             return true;
         }
 
         bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
         {
-           /* player->PlayerTalkClass->ClearMenus();
-            if (action == GOSSIP_ACTION_INFO_DEF+2)
-            {
-                DoScriptText(SAY_NOT_INTERESTED, creature);
-                player->CLOSE_GOSSIP_MENU();
-            }*/
-
+          uint64 guid = creature->GetGUID();
 
 		if (player->isInCombat())
 		{
@@ -75,7 +69,7 @@ class gossip_teleporter : public CreatureScript
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_WORLD_CITY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, GOSSIP_WORLD_BIRTH, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+20);
 
-					player->PlayerTalkClass->SendGossipMenu(907, creature->GetGUID());
+					player->PlayerTalkClass->SendGossipMenu(5695, creature->GetGUID());
 
 					break;
 				}
@@ -102,7 +96,7 @@ class gossip_teleporter : public CreatureScript
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [PK Area] Gadgetzan", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+14);
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [PK Area] Shattrath City", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+15);
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [The Dark Portal] The Stair of Destiny", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+16);
-					player->PlayerTalkClass->SendGossipMenu(907, creature->GetGUID());
+					player->PlayerTalkClass->SendGossipMenu(5695, creature->GetGUID());
 					break;
 				}
 			case GOSSIP_ACTION_INFO_DEF + 20:
@@ -117,7 +111,8 @@ class gossip_teleporter : public CreatureScript
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [Undead Birthplace]", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+26);
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [Tauren Birthplace]", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+27);
 					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cff000000 [Troll&Orc Birthplace]", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+28);
-					player->PlayerTalkClass->SendGossipMenu(907, creature->GetGUID());
+					player->ADD_GOSSIP_ITEM(GOSSIP_ICON_TAXI, "|cffFFFFFF Int'l Function|r", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+29);
+					player->PlayerTalkClass->SendGossipMenu(5695, creature->GetGUID());
 					break;
 				}
 
@@ -245,6 +240,12 @@ class gossip_teleporter : public CreatureScript
 				{
 						player->MonsterWhisper(MSG_ON_TELEPORT, player->GetGUID());
 					player->TeleportTo(1, -618.51f, -4251.66f, 38.71f, 0.00000f);
+					break;
+				}
+			case GOSSIP_ACTION_INFO_DEF + 29: // Int'l Trainer Function
+				{
+					player->GetSession()->SendNotification("|cff00ffffListing trainer spells for your class.|r");
+					player->GetSession()->SendTrainerList(guid);
 					break;
 				}
 				player->CLOSE_GOSSIP_MENU();

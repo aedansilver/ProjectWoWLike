@@ -320,8 +320,10 @@ class gossip_teleporter : public CreatureScript
 					player->SetSkill(46, player->GetSkillStep(46), player->GetMaxSkillValue(46), player->GetMaxSkillValue(46));
 					player->SetSkill(54, player->GetSkillStep(54), player->GetMaxSkillValue(54), player->GetMaxSkillValue(54));
 					player->SetSkill(55, player->GetSkillStep(55), player->GetMaxSkillValue(55), player->GetMaxSkillValue(55));
+					player->SetSkill(95, player->GetSkillStep(95), player->GetMaxSkillValue(95), player->GetMaxSkillValue(95));
 					player->SetSkill(136, player->GetSkillStep(136), player->GetMaxSkillValue(136), player->GetMaxSkillValue(136));
 					player->SetSkill(160, player->GetSkillStep(160), player->GetMaxSkillValue(160), player->GetMaxSkillValue(160));
+					player->SetSkill(162, player->GetSkillStep(162), player->GetMaxSkillValue(162), player->GetMaxSkillValue(162));
 					player->SetSkill(173, player->GetSkillStep(173), player->GetMaxSkillValue(173), player->GetMaxSkillValue(173));
 					player->SetSkill(176, player->GetSkillStep(176), player->GetMaxSkillValue(176), player->GetMaxSkillValue(176));
 					player->SetSkill(172, player->GetSkillStep(43), player->GetMaxSkillValue(172), player->GetMaxSkillValue(172));

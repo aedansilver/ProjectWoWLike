@@ -32,7 +32,7 @@ static bool HandleGobjDeleteCustom(ChatHandler* handler, char const* args)
 		WorldDatabase.PQuery("DELETE FROM `gameobject` WHERE `guid`=%d", handler->GetNearbyGameObject()->GetGUID());
 		handler->GetNearbyGameObject()->SetRespawnTime(0);
 		handler->GetNearbyGameObject()->Delete();
-		handler->GetNearbyGameObject()->DeleteFromDB();
+		handler->GetNearbyGameObject()->DeleteFromDB(); // strange it still appear back ingame after restart
 
         return true;
     }

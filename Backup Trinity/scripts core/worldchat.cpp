@@ -1,3 +1,5 @@
+// old outdated world chat script @ ac-web.org
+
 #include "ScriptPCH.h"
 #include "Chat.h"
 

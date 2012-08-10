@@ -1,0 +1,26 @@
+#ifdef SCRIPTS
+/* This is where custom scripts' loading functions should be declared. */
+void AddSC_npc_gurubashi_theme();
+void AddSC_universal_teleporter();
+void AddSC_Boss_Announcer();
+void AddSC_OnLogin_Announcer();
+void AddSC_cs_killstreak();
+void AddSC_Killstreak();
+void AddSC_levelnpc_teleporter();
+void AddSC_cs_world_chat();
+#endif
+
+void AddCustomScripts()
+{
+#ifdef SCRIPTS
+    /* This is where custom scripts should be added. */
+	AddSC_npc_gurubashi_theme();
+	AddSC_universal_teleporter();
+	AddSC_Boss_Announcer();
+	AddSC_OnLogin_Announcer(); // this is when login only :(( sad
+	AddSC_cs_killstreak();
+	AddSC_Killstreak();
+	AddSC_levelnpc_teleporter();
+	AddSC_cs_world_chat();
+#endif
+}

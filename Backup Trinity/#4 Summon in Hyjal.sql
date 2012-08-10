@@ -1,0 +1,1 @@
+UPDATE `playercreateinfo` SET `map`=1, `zone`=616, `position_x`=4658.31, `position_y`=-3745.29, `position_z`=946.29, `orientation`=1.68 ;

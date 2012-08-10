@@ -1,0 +1,3 @@
+/console PlayerStatLeftDropDown Melee
+/console PlayerStatRightDropDown Melee
+/reload

@@ -1,0 +1,5 @@
+/say %n, drink it now!
+
+/say Sorry, better luck next time %n.
+
+/say Congratulations %n, you go in the next round!

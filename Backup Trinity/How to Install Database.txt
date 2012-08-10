@@ -1,0 +1,22 @@
+Information about installing the database & scripts in the correct order.
+
+
+1. Run sql scripts b y this order:
+
+	#1 Item Stats Limit Removal - worldDB
+		
+	#2 Unlock Class Race - worldDB
+		
+	#3 Player Level Stats 100 - worldDB
+		
+	#4 Summon in Hyjal - worldDB
+		
+	#5 Allow Battlegrounds level 255
+
+	#6 Killstreak System - charDB
+
+	#7 Arena Theme - worldDB
+		
+2. Run the Install folder queries.
+
+3. Run the updates folder queries.

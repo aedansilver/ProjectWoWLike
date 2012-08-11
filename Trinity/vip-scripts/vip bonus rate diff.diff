@@ -2,7 +2,7 @@ From e69d1f7cc4732fdbcaecd8dcd69c810a874999e5 Mon Sep 17 00:00:00 2001
 From: Martin Vladimirov <nansin_@abv.bg>
 Date: Thu, 9 Aug 2012 12:37:48 +0300
 Subject: [PATCH] Add Vip-Account Patch
-
+Credits to Lasoto for updating this script
 ---
  src/server/authserver/Server/AuthSocket.cpp        |    5 ++++-
  src/server/game/Entities/Player/Player.cpp         |    6 +++++-

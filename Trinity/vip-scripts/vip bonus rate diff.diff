@@ -1,22 +1,40 @@
-From e69d1f7cc4732fdbcaecd8dcd69c810a874999e5 Mon Sep 17 00:00:00 2001
+From f49647e702d26a40c5c881f421c1d0af5b398185 Mon Sep 17 00:00:00 2001
 From: Martin Vladimirov <nansin_@abv.bg>
-Date: Thu, 9 Aug 2012 12:37:48 +0300
-Subject: [PATCH] Add Vip-Account Patch
-Credits to Lasoto for updating this script
+Date: Sat, 11 Aug 2012 15:19:10 +0300
+Subject: [PATCH] Add Vip Patch
+
+<Up Date by Lasoto>
 ---
+ sql/tools/vip.sql                                  |    8 ++++++++
  src/server/authserver/Server/AuthSocket.cpp        |    5 ++++-
- src/server/game/Entities/Player/Player.cpp         |    6 +++++-
+ src/server/game/Entities/Player/Player.cpp         |    8 ++++++--
  src/server/game/Miscellaneous/Formulas.h           |    4 +++-
  src/server/game/Server/WorldSession.cpp            |    4 ++--
  src/server/game/Server/WorldSession.h              |    4 +++-
- src/server/game/Server/WorldSocket.cpp             |   15 +++++++++++++--
+ src/server/game/Server/WorldSocket.cpp             |   14 ++++++++++++--
  src/server/game/World/World.cpp                    |   10 +++++++---
  src/server/game/World/World.h                      |    3 +++
  .../Database/Implementation/LoginDatabase.cpp      |    1 +
  .../shared/Database/Implementation/LoginDatabase.h |    1 +
  src/server/worldserver/worldserver.conf.dist       |    8 ++++++++
- 11 files changed, 50 insertions(+), 11 deletions(-)
+ 12 files changed, 58 insertions(+), 12 deletions(-)
+ create mode 100644 sql/tools/vip.sql
 
+diff --git a/sql/tools/vip.sql b/sql/tools/vip.sql
+new file mode 100644
+index 0000000..df317ed
+--- /dev/null
++++ b/sql/tools/vip.sql
+@@ -0,0 +1,8 @@
++CREATE TABLE IF NOT EXISTS `account_premium` (
++  `id` int(11) NOT NULL default '0' COMMENT 'Account id',
++  `setdate` bigint(40) NOT NULL default '0',
++  `unsetdate` bigint(40) NOT NULL default '0',
++  `premium_type` tinyint(4) unsigned NOT NULL default '1',
++  `active` tinyint(4) NOT NULL default '1',
++  PRIMARY KEY  (`id`,`setdate`)
++) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Premium Accounts';
+\ No newline at end of file
 diff --git a/src/server/authserver/Server/AuthSocket.cpp b/src/server/authserver/Server/AuthSocket.cpp
 index 0794d9a..a23f984 100755
 --- a/src/server/authserver/Server/AuthSocket.cpp
@@ -26,7 +44,7 @@ index 0794d9a..a23f984 100755
      // Verify that this IP is not in the ip_banned table
      LoginDatabase.Execute(LoginDatabase.GetPreparedStatement(LOGIN_DEL_EXPIRED_IP_BANS));
 -
-+	
++ 
 +    LoginDatabase.Execute(
 +        LoginDatabase.GetPreparedStatement(LOGIN_SET_ACCOUNT_PREMIUM)
 +            );
@@ -34,7 +52,7 @@ index 0794d9a..a23f984 100755
      PreparedStatement *stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_IP_BANNED);
      stmt->setString(0, ip_address);
 diff --git a/src/server/game/Entities/Player/Player.cpp b/src/server/game/Entities/Player/Player.cpp
-index 72c5005..53c5097 100755
+index 72c5005..a5ebb9f 100755
 --- a/src/server/game/Entities/Player/Player.cpp
 +++ b/src/server/game/Entities/Player/Player.cpp
 @@ -6845,7 +6845,8 @@ void Player::CheckAreaExploreAndOutdoor()
@@ -47,18 +65,20 @@ index 72c5005..53c5097 100755
                  GiveXP(XP, NULL);
                  SendExplorationExperience(area, XP);
              }
-@@ -15093,6 +15094,9 @@ void Player::RewardQuest(Quest const* quest, uint32 reward, Object* questGiver,
+@@ -15093,7 +15094,10 @@ void Player::RewardQuest(Quest const* quest, uint32 reward, Object* questGiver,
      Unit::AuraEffectList const& ModXPPctAuras = GetAuraEffectsByType(SPELL_AURA_MOD_XP_QUEST_PCT);
      for (Unit::AuraEffectList::const_iterator i = ModXPPctAuras.begin(); i != ModXPPctAuras.end(); ++i)
          AddPctN(XP, (*i)->GetAmount());
-+		
+-
++				
 +    if (GetSession()->IsPremium())
 +        XP *= sWorld->getRate(RATE_XP_QUEST_PREMIUM);
- 
++		
      int32 moneyRew = 0;
      if (getLevel() < sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
+         GiveXP(XP, NULL);
 diff --git a/src/server/game/Miscellaneous/Formulas.h b/src/server/game/Miscellaneous/Formulas.h
-index dac5b1e..00d5cfa 100755
+index dac5b1e..13b7c73 100755
 --- a/src/server/game/Miscellaneous/Formulas.h
 +++ b/src/server/game/Miscellaneous/Formulas.h
 @@ -178,7 +178,9 @@ namespace Trinity
@@ -118,18 +138,10 @@ index b8b0953..7018441 100755
          typedef std::list<AddonInfo> AddonsList;
  
 diff --git a/src/server/game/Server/WorldSocket.cpp b/src/server/game/Server/WorldSocket.cpp
-index 5b04c3d..9856182 100755
+index 5b04c3d..8d86f3b 100755
 --- a/src/server/game/Server/WorldSocket.cpp
 +++ b/src/server/game/Server/WorldSocket.cpp
-@@ -788,6 +788,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
-     //uint8 expansion = 0;
-     LocaleConstant locale;
-     std::string account;
-+	bool isPremium = false;	
-     SHA1Hash sha;
-     BigNumber v, s, g, N;
-     WorldPacket packet, SendAddonPacked;
-@@ -939,7 +940,17 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
+@@ -939,7 +939,17 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
          sLog->outError(LOG_FILTER_GENERAL, "WorldSocket::HandleAuthSession: Sent Auth Response (Account banned).");
          return -1;
      }
@@ -148,7 +160,7 @@ index 5b04c3d..9856182 100755
      // Check locked state for server
      AccountTypes allowedAccountType = sWorld->GetPlayerSecurityLimit();
      sLog->outDebug(LOG_FILTER_NETWORKIO, "Allowed Level: %u Player Level %u", allowedAccountType, AccountTypes(security));
-@@ -1003,7 +1014,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
+@@ -1003,7 +1013,7 @@ int WorldSocket::HandleAuthSession(WorldPacket& recvPacket)
      LoginDatabase.Execute(stmt);
  
      // NOTE ATM the socket is single-threaded, have this in mind ...
@@ -158,7 +170,7 @@ index 5b04c3d..9856182 100755
      m_Crypt.Init(&k);
  
 diff --git a/src/server/game/World/World.cpp b/src/server/game/World/World.cpp
-index ab3b715..b7bf0e9 100755
+index ab3b715..1aee89a 100755
 --- a/src/server/game/World/World.cpp
 +++ b/src/server/game/World/World.cpp
 @@ -456,9 +456,13 @@ void World::LoadConfigSettings(bool reload)
@@ -179,42 +191,42 @@ index ab3b715..b7bf0e9 100755
      if (rate_values[RATE_REPAIRCOST] < 0.0f)
      {
 diff --git a/src/server/game/World/World.h b/src/server/game/World/World.h
-index f0dbc3c..09c2c1a 100755
+index f0dbc3c..9e317d3 100755
 --- a/src/server/game/World/World.h
 +++ b/src/server/game/World/World.h
 @@ -344,8 +344,11 @@ enum Rates
      RATE_DROP_ITEM_REFERENCED_AMOUNT,
      RATE_DROP_MONEY,
      RATE_XP_KILL,
-+    RATE_XP_KILL_PREMIUM,	
++    RATE_XP_KILL_PREMIUM,
      RATE_XP_QUEST,
 +    RATE_XP_QUEST_PREMIUM,	
      RATE_XP_EXPLORE,
-+    RATE_XP_EXPLORE_PREMIUM,	
++    RATE_XP_EXPLORE_PREMIUM,
      RATE_REPAIRCOST,
      RATE_REPUTATION_GAIN,
      RATE_REPUTATION_LOWLEVEL_KILL,
 diff --git a/src/server/shared/Database/Implementation/LoginDatabase.cpp b/src/server/shared/Database/Implementation/LoginDatabase.cpp
-index 31d9f5e..2f6067d 100755
+index 31d9f5e..c631511 100755
 --- a/src/server/shared/Database/Implementation/LoginDatabase.cpp
 +++ b/src/server/shared/Database/Implementation/LoginDatabase.cpp
 @@ -51,6 +51,7 @@ void LoginDatabaseConnection::DoPrepareStatements()
      PREPARE_STATEMENT(LOGIN_DEL_IP_NOT_BANNED, "DELETE FROM ip_banned WHERE ip = ?", CONNECTION_ASYNC)
      PREPARE_STATEMENT(LOGIN_INS_ACCOUNT_BANNED, "INSERT INTO account_banned VALUES (?, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()+?, ?, ?, 1)", CONNECTION_ASYNC)
      PREPARE_STATEMENT(LOGIN_UPD_ACCOUNT_NOT_BANNED, "UPDATE account_banned SET active = 0 WHERE id = ? AND active != 0", CONNECTION_ASYNC)
-+	PREPARE_STATEMENT(LOGIN_SET_ACCOUNT_PREMIUM, "UPDATE account_premium SET active = 0 WHERE unsetdate<=UNIX_TIMESTAMP() AND unsetdate<>setdate", CONNECTION_ASYNC)	
++	PREPARE_STATEMENT(LOGIN_SET_ACCOUNT_PREMIUM, "UPDATE account_premium SET active = 0 WHERE unsetdate<=UNIX_TIMESTAMP() AND unsetdate<>setdate", CONNECTION_ASYNC)
      PREPARE_STATEMENT(LOGIN_DEL_REALM_CHARACTERS_BY_REALM, "DELETE FROM realmcharacters WHERE acctid = ? AND realmid = ?", CONNECTION_ASYNC)
      PREPARE_STATEMENT(LOGIN_DEL_REALM_CHARACTERS, "DELETE FROM realmcharacters WHERE acctid = ?", CONNECTION_ASYNC);
      PREPARE_STATEMENT(LOGIN_INS_REALM_CHARACTERS, "INSERT INTO realmcharacters (numchars, acctid, realmid) VALUES (?, ?, ?)", CONNECTION_ASYNC)
 diff --git a/src/server/shared/Database/Implementation/LoginDatabase.h b/src/server/shared/Database/Implementation/LoginDatabase.h
-index 7c2a94e..e206740 100755
+index 7c2a94e..2d7f08e 100755
 --- a/src/server/shared/Database/Implementation/LoginDatabase.h
 +++ b/src/server/shared/Database/Implementation/LoginDatabase.h
 @@ -71,6 +71,7 @@ enum LoginDatabaseStatements
      LOGIN_SEL_ACCOUNT_BY_ID,
      LOGIN_INS_ACCOUNT_BANNED,
      LOGIN_UPD_ACCOUNT_NOT_BANNED,
-+	LOGIN_SET_ACCOUNT_PREMIUM,	
++	LOGIN_SET_ACCOUNT_PREMIUM,
      LOGIN_DEL_REALM_CHARACTERS_BY_REALM,
      LOGIN_DEL_REALM_CHARACTERS,
      LOGIN_INS_REALM_CHARACTERS,

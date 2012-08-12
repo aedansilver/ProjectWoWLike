@@ -2,6 +2,7 @@ From f49647e702d26a40c5c881f421c1d0af5b398185 Mon Sep 17 00:00:00 2001
 From: Martin Vladimirov <nansin_@abv.bg>
 Date: Sat, 11 Aug 2012 15:19:10 +0300
 Subject: [PATCH] Add Vip Patch
+credits to lasoto for updating this script
 
 <Up Date by Lasoto>
 ---

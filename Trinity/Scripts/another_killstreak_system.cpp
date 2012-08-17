@@ -1,3 +1,5 @@
+//credits to Wutloly from ac-web
+
 #include "ScriptPCH.h"
 //Change the token id and Kill streak or End of Streak rewards here.
 #define TokenID 47241

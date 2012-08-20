@@ -1,4 +1,4 @@
-// Credits to Sdyes from ac-web
+// Credits to Sdyess from ac-web
 
 #include "ScriptPCH.h"
 

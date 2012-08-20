@@ -32,7 +32,7 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
                        
                                 switch(uiAction)
                                 {      
- -------------------------------------------------------------------------------------------------------------------------------------------------                                                              
+                                                           
                          case 1: // Level 10 - required 1 token
                            if (pPlayer->HasItemCount(TOKEN_ID, 1, true))
                            {
@@ -48,7 +48,7 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
                                       return false;
                                 }
                                 break;
--------------------------------------------------------------------------------------------------------------------------------------------------
+
                                                                
                                                                
                      case 2: // Level 20 - required t tokens
@@ -66,9 +66,6 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
                 return false;
              }
                break;
- 
-                                                               
--------------------------------------------------------------------------------------------------------------------------------------------------
 
                                  
                          case 3: // Level 30 - required  3 tokens
@@ -86,9 +83,7 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
          return false;
         }
         break;
-		
--------------------------------------------------------------------------------------------------------------------------------------------------
-		
+				
  
         case 4: // Level 40 - required 4 tokens
         if (pPlayer->HasItemCount(TOKEN_ID, 4, true))
@@ -106,7 +101,6 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
         }
         break;
                
--------------------------------------------------------------------------------------------------------------------------------------------------               
                
                    case 5: // Level 50 - required  5 tokens
         if (pPlayer->HasItemCount(TOKEN_ID, 5, true))
@@ -124,8 +118,7 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
         }
         break;
                
--------------------------------------------------------------------------------------------------------------------------------------------------               
-               
+              
                                    case 6: // Level 60 - required  6 tokens
         if (pPlayer->HasItemCount(TOKEN_ID, 6, true))
         {
@@ -142,7 +135,6 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
         }
         break;
                
--------------------------------------------------------------------------------------------------------------------------------------------------                   
                
                 case 7: // Level 70 - required  7 tokens
         if (pPlayer->HasItemCount(TOKEN_ID, 7, true))
@@ -159,8 +151,7 @@ bool OnGossipSelect(Player* pPlayer, Creature* _creature, uint32 uiSender, uint3
          return false;
         }
         break;
--------------------------------------------------------------------------------------------------------------------------------------------------              
-               
+              
                                 case 8: // Level 80 - required  8 tokens
         if (pPlayer->HasItemCount(TOKEN_ID, 8, true))
         {

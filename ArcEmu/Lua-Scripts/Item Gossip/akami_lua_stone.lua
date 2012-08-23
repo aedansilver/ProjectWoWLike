@@ -1,4 +1,4 @@
---CREDITS AK47SIGH (aka AlexeWarr)
+--CREDITS AK47SIGH (aka AlexeWarr) & MidoKing
 
 local itemid = 6948 -- your item ID
 
@@ -72,7 +72,7 @@ item:GossipSendMenu(player)
 end
 if(intid == 7) then 
 	if(GetPlayer(code) == false) then
-		player:SendAreaTriggerMessage("This person does not exist or is either offline.")
+		returnMSG = "This person does not exist or is either offline."
 		else
 		plrGot = GetPlayer(code)
 		if(plrGot:IsInGroup()) then
@@ -100,7 +100,7 @@ item:GossipSendMenu(player)
 end
 if(intid == 9) then 
 	if(GetPlayer(code) == false) then
-		player:SendAreaTriggerMessage("This person does not exist or is either offline.")
+		returnMSG = "This person does not exist or is either offline."
 		else
 		plrGot = GetPlayer(code)
 			plrM = plrGot:GetMapId()
@@ -123,7 +123,7 @@ item:GossipSendMenu(player)
 end
 if(intid == 11) then 
 	if(GetPlayer(code) == false) then
-		player:SendAreaTriggerMessage("This person does not exist or is either offline.")
+		returnMSG = "This person does not exist or is either offline."
 		else
 		plrGot = GetPlayer(code)
 		if(plrGot:IsInGroup() == false) then
@@ -157,7 +157,7 @@ item:GossipSendMenu(player)
 end
 if(intid == 13) then 
 	if(GetPlayer(code) == false) then
-		player:SendAreaTriggerMessage("This person does not exist or is either offline.")
+		returnMSG = "This person does not exist or is either offline."
 		else
 		plrGot = GetPlayer(code)
 		if(plrGot:IsInGroup() == false) then
@@ -183,7 +183,7 @@ item:GossipSendMenu(player)
 end
 if(intid == 15) then 
 	if(GetPlayer(code) == false) then
-		player:SendAreaTriggerMessage("This person does not exist or is either offline.")
+		returnMSG = "This person does not exist or is either offline."
 		else
 		plrGot = GetPlayer(code)
 			plrM = plrGot:GetMapId()
